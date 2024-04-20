@@ -1,4 +1,4 @@
-import {PlaceType} from '../types/PlaceType.tsx';
+import {PlaceType} from '../const.ts';
 
 type NearCardProps = {
   premium?: boolean;
