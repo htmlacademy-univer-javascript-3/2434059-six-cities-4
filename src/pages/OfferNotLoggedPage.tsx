@@ -1,5 +1,5 @@
 import {NearCard} from '../components/NearCard.tsx';
-import {PlaceType} from '../types/PlaceType.tsx';
+import {PlaceType} from '../const.ts';
 
 export function OfferNotLoggedPage(): JSX.Element {
   return (
@@ -8,7 +8,7 @@ export function OfferNotLoggedPage(): JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main.html">
+              <a className="header__logo-link" href="/">
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
               </a>
             </div>

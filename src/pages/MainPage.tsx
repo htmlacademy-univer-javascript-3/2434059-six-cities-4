@@ -1,5 +1,5 @@
 import {MainPageCard} from '../components/MainPageCard.tsx';
-import {PlaceType} from '../types/PlaceType.tsx';
+import {PlaceType} from '../const.ts';
 
 type MainPageProps = {
   placesCount: number;

@@ -1,6 +1,6 @@
-import {PlaceType} from '../types/PlaceType.tsx';
+import {PlaceType} from '../const.ts';
 
-type FavouritesCardProps = {
+type FavoritesCardProps = {
   premium?: boolean;
   image: string;
   price: number;
@@ -8,7 +8,7 @@ type FavouritesCardProps = {
   placeType: PlaceType;
 }
 
-export function FavouritesCard({premium, image, price, placeName, placeType}: FavouritesCardProps): JSX.Element {
+export function FavoritesCard({premium, image, price, placeName, placeType}: FavoritesCardProps): JSX.Element {
   return (
     <article className="favorites__card place-card">
       {premium && (
