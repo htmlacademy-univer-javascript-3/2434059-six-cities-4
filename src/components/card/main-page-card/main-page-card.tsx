@@ -1,4 +1,4 @@
-import {PlaceType} from '../const.ts';
+import {PlaceType} from '../../../const.ts';
 
 type MainPageCardProps = {
   premium?: boolean;

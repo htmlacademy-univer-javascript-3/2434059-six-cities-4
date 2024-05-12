@@ -1,14 +1,14 @@
-import {FavoritesCard} from '../components/FavoritesCard.tsx';
-import {PlaceType} from '../const.ts';
+import {PlaceType} from '../../const.ts';
+import {FavouritesCard} from "../../components/card/favourites-card/favourites-card.tsx";
 
-export function FavoritesPage(): JSX.Element {
+export function FavouritesScreen(): JSX.Element {
   return (
     <div className="page">
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="/">
+              <a className="header__logo-link" href="/public">
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
               </a>
             </div>
@@ -47,14 +47,14 @@ export function FavoritesPage(): JSX.Element {
                   </div>
                 </div>
                 <div className="favorites__places">
-                  <FavoritesCard
+                  <FavouritesCard
                     premium
                     image={'img/apartment-small-03.jpg'}
                     price={180}
                     placeName={'Nice, cozy, warm big bed apartment'}
                     placeType={PlaceType.Apartment}
                   />
-                  <FavoritesCard
+                  <FavouritesCard
                     image={'img/room-small.jpg'}
                     price={80}
                     placeName={'Wood and stone place'}
@@ -72,7 +72,7 @@ export function FavoritesPage(): JSX.Element {
                   </div>
                 </div>
                 <div className="favorites__places">
-                  <FavoritesCard
+                  <FavouritesCard
                     image={'img/apartment-small-04.jpg'}
                     price={180}
                     placeName={'White castle'}
@@ -85,7 +85,7 @@ export function FavoritesPage(): JSX.Element {
         </div>
       </main>
       <footer className="footer container">
-        <a className="footer__logo-link" href="/">
+        <a className="footer__logo-link" href="/public">
           <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33"/>
         </a>
       </footer>

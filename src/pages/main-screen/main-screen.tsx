@@ -1,11 +1,11 @@
-import {MainPageCard} from '../components/MainPageCard.tsx';
-import {PlaceType} from '../const.ts';
+import {PlaceType} from '../../const.ts';
+import {MainPageCard} from '../../components/card/main-page-card/main-page-card.tsx';
 
 type MainPageProps = {
   placesCount: number;
 }
 
-export function MainPage({placesCount} : MainPageProps): JSX.Element {
+export function MainScreen({placesCount} : MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
