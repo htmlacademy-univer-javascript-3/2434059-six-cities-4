@@ -6,20 +6,28 @@ import {AppRoute, AuthorizationStatus} from '../../const.ts';
 import {PrivateRoute} from '../private-route/private-route.tsx';
 import {LoginScreen} from '../../pages/login-screen/login-screen.tsx';
 import {FavouritesScreen} from '../../pages/favourites-screen/favourites-screen.tsx';
+import {Offer} from '../../types/offer.ts';
+import {OfferLayout} from '../layout/offerLayout.tsx';
 
-export function App(): JSX.Element {
+type AppProps = {
+  offers: Offer[];
+}
+
+export function App({offers}: AppProps): JSX.Element {
   const authStatus = AuthorizationStatus.Unknown;
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={AppRoute.Main} element={<MainScreen placesCount={312}/>}/>
+        <Route path={AppRoute.Main} element={<MainScreen placesCount={312} offers={offers}/>}/>
         <Route path={AppRoute.Login} element={<LoginScreen/>}/>
-        <Route path={AppRoute.Offer} element={<OfferScreen/>}/>
+        <Route path={AppRoute.Offer} element={<OfferLayout/>}>
+          <Route path={':id'} element={<OfferScreen offers={offers}/>}/>
+        </Route>
         <Route
           path={AppRoute.Favorites}
           element={
             <PrivateRoute authorizationStatus={authStatus}>
-              <FavouritesScreen/>
+              <FavouritesScreen offers={offers}/>
             </PrivateRoute>
           }
         />

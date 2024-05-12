@@ -1,6 +1,8 @@
-import {PlaceType} from '../../../const.ts';
+import {AppRoute, PlaceType} from '../../../const.ts';
+import {Link} from 'react-router-dom';
 
 type FavoritesCardProps = {
+  id: number;
   premium?: boolean;
   image: string;
   price: number;
@@ -8,7 +10,7 @@ type FavoritesCardProps = {
   placeType: PlaceType;
 }
 
-export function FavouritesCard({premium, image, price, placeName, placeType}: FavoritesCardProps): JSX.Element {
+export function FavouritesCard({id, premium, image, price, placeName, placeType}: FavoritesCardProps): JSX.Element {
   return (
     <article className="favorites__card place-card">
       {premium && (
@@ -16,12 +18,12 @@ export function FavouritesCard({premium, image, price, placeName, placeType}: Fa
           <span>Premium</span>
         </div>)}
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={`${AppRoute.Offer}/${id}`}>
           <img
             className="place-card__image" src={image} width="150" height="110"
             alt="Place image"
           />
-        </a>
+        </Link>
       </div>
       <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
@@ -46,7 +48,7 @@ export function FavouritesCard({premium, image, price, placeName, placeType}: Fa
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{placeName}</a>
+          <Link to={`${AppRoute.Offer}/${id}`}>{placeName}</Link>
         </h2>
         <p className="place-card__type">{placeType}</p>
       </div>

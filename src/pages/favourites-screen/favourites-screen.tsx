@@ -1,37 +1,17 @@
-import {PlaceType} from '../../const.ts';
-import {FavouritesCard} from "../../components/card/favourites-card/favourites-card.tsx";
+import {FavouritesCard} from '../../components/card/favourites-card/favourites-card.tsx';
+import {Offer} from '../../types/offer.ts';
+import {Header} from '../../components/header/header.tsx';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const.ts';
 
-export function FavouritesScreen(): JSX.Element {
+type FavouritesProps = {
+  offers: Offer[];
+}
+
+export function FavouritesScreen({offers}: FavouritesProps): JSX.Element {
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <a className="header__logo-link" href="/public">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-              </a>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header/>
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
@@ -41,43 +21,23 @@ export function FavouritesScreen(): JSX.Element {
               <li className="favorites__locations-items">
                 <div className="favorites__locations locations locations--current">
                   <div className="locations__item">
-                    <a className="locations__item-link" href="#">
+                    <Link className="locations__item-link" to={AppRoute.Main}>
                       <span>Amsterdam</span>
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="favorites__places">
-                  <FavouritesCard
-                    premium
-                    image={'img/apartment-small-03.jpg'}
-                    price={180}
-                    placeName={'Nice, cozy, warm big bed apartment'}
-                    placeType={PlaceType.Apartment}
-                  />
-                  <FavouritesCard
-                    image={'img/room-small.jpg'}
-                    price={80}
-                    placeName={'Wood and stone place'}
-                    placeType={PlaceType.Room}
-                  />
-                </div>
-              </li>
-
-              <li className="favorites__locations-items">
-                <div className="favorites__locations locations locations--current">
-                  <div className="locations__item">
-                    <a className="locations__item-link" href="#">
-                      <span>Cologne</span>
-                    </a>
-                  </div>
-                </div>
-                <div className="favorites__places">
-                  <FavouritesCard
-                    image={'img/apartment-small-04.jpg'}
-                    price={180}
-                    placeName={'White castle'}
-                    placeType={PlaceType.Apartment}
-                  />
+                  {offers.filter((offer) => offer.inBookmarks).map((offer) => (
+                    <FavouritesCard
+                      key={offer.id}
+                      id={offer.id}
+                      image={offer.pictures[0]}
+                      price={offer.price}
+                      placeName={offer.placeName}
+                      placeType={offer.placeType}
+                      premium={offer.premium}
+                    />
+                  ))}
                 </div>
               </li>
             </ul>
@@ -85,9 +45,9 @@ export function FavouritesScreen(): JSX.Element {
         </div>
       </main>
       <footer className="footer container">
-        <a className="footer__logo-link" href="/public">
+        <Link className="footer__logo-link" to={AppRoute.Main}>
           <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33"/>
-        </a>
+        </Link>
       </footer>
     </div>
   );

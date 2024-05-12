@@ -1,9 +1,16 @@
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const.ts';
+import {Header} from '../../components/header/header.tsx';
+
 export function NotFoundScreen(): JSX.Element {
   return (
-    <center>
-      <h1>404</h1>
-      <h2>Page not found.</h2>
-      <a href="/public">Home page</a>
-    </center>
+    <>
+      <Header/>
+      <center>
+        <h1>404</h1>
+        <h2>Page not found.</h2>
+        <Link to={AppRoute.Main}>Home page</Link>
+      </center>
+    </>
   );
 }
