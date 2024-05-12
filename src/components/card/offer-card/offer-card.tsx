@@ -1,17 +1,28 @@
-import {PlaceType} from '../const.ts';
+import {AppRoute, PlaceType} from '../../../const.ts';
+import {Link} from 'react-router-dom';
 
 type MainPageCardProps = {
+  id: number;
   premium?: boolean;
   image: string;
   price: number;
   placeName: string;
   placeType: PlaceType;
   inBookmarks?: boolean;
+  onMouseOverChange: (id: number|undefined) => void;
 }
 
-export function MainPageCard({premium, image, price, placeName, placeType, inBookmarks}: MainPageCardProps): JSX.Element {
+export function OfferCard({id, premium, image, price, placeName, placeType, inBookmarks, onMouseOverChange}: MainPageCardProps): JSX.Element {
+  function handleMouseOver() {
+    onMouseOverChange(id);
+  }
+
+  function handleMouseLeave() {
+    onMouseOverChange(undefined);
+  }
+
   return (
-    <article className="cities__card place-card">
+    <article className="cities__card place-card" onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>
       {premium && (
         <div className="place-card__mark">
           <span>Premium</span>
@@ -19,9 +30,9 @@ export function MainPageCard({premium, image, price, placeName, placeType, inBoo
       )}
 
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={`${AppRoute.Offer}/${id}`}>
           <img className="place-card__image" src={image} width="260" height="200" alt="Place image"/>
-        </a>
+        </Link>
       </div>
 
       <div className="place-card__info">
@@ -49,7 +60,7 @@ export function MainPageCard({premium, image, price, placeName, placeType, inBoo
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{placeName}</a>
+          <Link to={`${AppRoute.Offer}/${id}`}>{placeName}</Link>
         </h2>
         <p className="place-card__type">{placeType}</p>
       </div>

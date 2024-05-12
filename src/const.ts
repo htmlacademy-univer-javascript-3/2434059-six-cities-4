@@ -7,11 +7,13 @@ export enum AuthorizationStatus {
 export enum PlaceType {
   Room = 'Room',
   Apartment = 'Apartment',
+  House = 'House',
+  Hotel = 'Hotel',
 }
 
 export enum AppRoute {
   Main = '/',
   Login = '/login',
-  Offer = '/offer/:id',
+  Offer = '/offer',
   Favorites = '/favorites',
 }
