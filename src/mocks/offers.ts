@@ -97,7 +97,7 @@ export const offers: Offer[] = [
     bedrooms: 1,
     adults: 1,
     inBookmarks: true,
-    reviews: reviews,
+    reviews: [],
     location: {
       city: City.Amsterdam,
       lat: 52.3809553943508,

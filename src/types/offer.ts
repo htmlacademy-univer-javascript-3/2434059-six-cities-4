@@ -15,7 +15,7 @@ export type Offer = {
   bedrooms: number;
   adults: number;
   host: Person;
-  reviews: Review[];
+  reviews: ReviewData[];
   location: MapPoint;
 }
 
@@ -25,10 +25,10 @@ type Person = {
   pro: boolean;
 }
 
-export type Review = {
+export type ReviewData = {
   id: number;
   author: Person;
   reviewText: string;
   rating: number;
-  reviewDate: string;
+  reviewDate: Date;
 }

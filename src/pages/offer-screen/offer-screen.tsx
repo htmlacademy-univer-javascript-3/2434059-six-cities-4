@@ -1,9 +1,11 @@
-import {NearPlaceCard} from '../../components/card/near-place-card/near-place-card.tsx';
-import {PlaceType} from '../../const.ts';
+import {AMSTERDAM} from '../../const.ts';
 import {Offer} from '../../types/offer.ts';
 import {useParams} from 'react-router-dom';
 import {NotFoundScreen} from '../not-found-screen/not-found-screen.tsx';
 import {ReviewForm} from '../../components/rewiew-form/review-form.tsx';
+import {ReviewsList} from '../../components/reviews-list/reviews-list.tsx';
+import {Map} from '../../components/map/map.tsx';
+import {NearbyList} from '../../components/offers-list/nearby-list.tsx';
 
 type OfferProps = {
   offers: Offer[];
@@ -23,7 +25,8 @@ export function OfferScreen({offers}: OfferProps): JSX.Element {
     paragraphs.push([i, descriptionParagraphs[i]]);
   }
 
-  const pictures = offer.pictures.length > 6 ? offer.pictures.slice(0, 6) : offer.pictures;
+  const nearbyOffers = offers.filter((o)=>o.id !== offer.id).slice(0, 3);
+  const pictures = offer.pictures.slice(0, 6);
 
   return (
     <main className="page__main page__main--offer">
@@ -119,67 +122,17 @@ export function OfferScreen({offers}: OfferProps): JSX.Element {
             </div>
 
             <section className="offer__reviews reviews">
-              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{offer.reviews.length}</span></h2>
-              <ul className="reviews__list">
-                {offer.reviews.map((review) => (
-                  <li className="reviews__item" key={review.id}>
-                    <div className="reviews__user user">
-                      <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                        <img
-                          className="reviews__avatar user__avatar" src={review.author.avatar} width="54" height="54"
-                          alt="Reviews avatar"
-                        />
-                      </div>
-                      <span className="reviews__user-name">
-                        {review.author.name}
-                      </span>
-                    </div>
-                    <div className="reviews__info">
-                      <div className="reviews__rating rating">
-                        <div className="reviews__stars rating__stars">
-                          <span style={{width: 80}}></span>
-                          <span className="visually-hidden">Rating</span>
-                        </div>
-                      </div>
-                      <p className="reviews__text">
-                        {review.reviewText}
-                      </p>
-                      <time className="reviews__time" dateTime={review.reviewDate}>April 2019</time>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+              <ReviewsList reviews={offer.reviews}/>
               <ReviewForm/>
             </section>
           </div>
         </div>
-        <section className="offer__map map"></section>
+        <Map cityLocation={AMSTERDAM} mapPoints={nearbyOffers.map((o) => o.location)} className={'offer__map'}/>
       </section>
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <div className="near-places__list places__list">
-            <NearPlaceCard
-              image={'img/room.jpg'}
-              price={80}
-              placeName={'Wood and stone place'}
-              placeType={PlaceType.Room}
-              inBookmarks
-            />
-            <NearPlaceCard
-              image={'img/apartment-02.jpg'}
-              price={132}
-              placeName={'Canal View Prinsengracht'}
-              placeType={PlaceType.Apartment}
-            />
-            <NearPlaceCard
-              premium
-              image={'img/apartment-03.jpg'}
-              price={180}
-              placeName={'Nice, cozy, warm big bed apartment'}
-              placeType={PlaceType.Apartment}
-            />
-          </div>
+          <NearbyList nearbyOffers={nearbyOffers}/>
         </section>
       </div>
     </main>

@@ -7,9 +7,10 @@ import {MapPoint} from '../../types/map-point.ts';
 type MapProps = {
   cityLocation: MapPoint;
   mapPoints: MapPoint[];
+  className: string;
 }
 
-export function Map({cityLocation, mapPoints}: MapProps): JSX.Element {
+export function Map({cityLocation, mapPoints, className}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, cityLocation);
 
@@ -33,6 +34,6 @@ export function Map({cityLocation, mapPoints}: MapProps): JSX.Element {
 
 
   return (
-    <section className="cities__map map" ref={mapRef}/>
+    <section className={`${className} map`} ref={mapRef}/>
   );
 }

@@ -1,26 +1,22 @@
-import {AppRoute, PlaceType} from '../../../const.ts';
+import {AppRoute} from '../../../const.ts';
 import {Link} from 'react-router-dom';
+import {Offer} from '../../../types/offer.ts';
 
 type FavoritesCardProps = {
-  id: number;
-  premium?: boolean;
-  image: string;
-  price: number;
-  placeName: string;
-  placeType: PlaceType;
+  offer: Offer;
 }
 
-export function FavouritesCard({id, premium, image, price, placeName, placeType}: FavoritesCardProps): JSX.Element {
+export function FavouritesCard({offer}: FavoritesCardProps): JSX.Element {
   return (
     <article className="favorites__card place-card">
-      {premium && (
+      {offer.premium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>)}
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <Link to={`${AppRoute.Offer}/${id}`}>
+        <Link to={`${AppRoute.Offer}/${offer.id}`}>
           <img
-            className="place-card__image" src={image} width="150" height="110"
+            className="place-card__image" src={offer.pictures[0]} width="150" height="110"
             alt="Place image"
           />
         </Link>
@@ -28,7 +24,7 @@ export function FavouritesCard({id, premium, image, price, placeName, placeType}
       <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{price}</b>
+            <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
@@ -48,9 +44,9 @@ export function FavouritesCard({id, premium, image, price, placeName, placeType}
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Offer}/${id}`}>{placeName}</Link>
+          <Link to={`${AppRoute.Offer}/${offer.id}`}>{offer.placeName}</Link>
         </h2>
-        <p className="place-card__type">{placeType}</p>
+        <p className="place-card__type">{offer.placeType}</p>
       </div>
     </article>
   );

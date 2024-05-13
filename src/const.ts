@@ -34,3 +34,9 @@ export const AMSTERDAM: MapPoint = {
   lat: 52.371807,
   lng: 4.896029,
 };
+
+export enum CardType {
+  Offer = 'Offer',
+  Favourite = 'Favourite',
+  Nearby = 'Nearby'
+}
