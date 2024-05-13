@@ -1,4 +1,5 @@
 import {PlaceType} from '../const.ts';
+import {MapPoint} from './map-point.ts';
 
 export type Offer = {
   premium?: boolean;
@@ -15,6 +16,7 @@ export type Offer = {
   adults: number;
   host: Person;
   reviews: Review[];
+  location: MapPoint;
 }
 
 type Person = {
