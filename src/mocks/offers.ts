@@ -1,5 +1,5 @@
 import {Offer} from '../types/offer.ts';
-import {PlaceType} from '../const.ts';
+import {City, PlaceType} from '../const.ts';
 import {reviews} from './reviews.ts';
 
 export const offers: Offer[] = [
@@ -24,6 +24,11 @@ export const offers: Offer[] = [
     bedrooms: 1,
     adults: 2,
     reviews: reviews,
+    location: {
+      city: City.Amsterdam,
+      lat: 52.3909553943508,
+      lng: 4.85309666406198
+    },
   }, {
     id: 2,
     premium: true,
@@ -43,6 +48,11 @@ export const offers: Offer[] = [
     bedrooms: 3,
     adults: 3,
     reviews: reviews,
+    location: {
+      city: City.Amsterdam,
+      lat: 52.3609553943508,
+      lng: 4.85309666406198,
+    }
   }, {
     id: 3,
     premium: true,
@@ -62,6 +72,11 @@ export const offers: Offer[] = [
     adults: 12,
     inBookmarks: true,
     reviews: reviews,
+    location: {
+      city: City.Amsterdam,
+      lat: 52.3909553943508,
+      lng: 4.929309666406198
+    },
   }, {
     id: 4,
     price: 33,
@@ -83,5 +98,10 @@ export const offers: Offer[] = [
     adults: 1,
     inBookmarks: true,
     reviews: reviews,
+    location: {
+      city: City.Amsterdam,
+      lat: 52.3809553943508,
+      lng: 4.939309666406198,
+    },
   }
 ];
