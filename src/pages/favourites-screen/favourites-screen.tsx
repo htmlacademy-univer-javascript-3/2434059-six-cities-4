@@ -30,12 +30,7 @@ export function FavouritesScreen({offers}: FavouritesProps): JSX.Element {
                   {offers.filter((offer) => offer.inBookmarks).map((offer) => (
                     <FavouritesCard
                       key={offer.id}
-                      id={offer.id}
-                      image={offer.pictures[0]}
-                      price={offer.price}
-                      placeName={offer.placeName}
-                      placeType={offer.placeType}
-                      premium={offer.premium}
+                      offer={offer}
                     />
                   ))}
                 </div>
