@@ -1,4 +1,3 @@
-import {AMSTERDAM} from '../../const.ts';
 import {Offer} from '../../types/offer.ts';
 import {useParams} from 'react-router-dom';
 import {NotFoundScreen} from '../not-found-screen/not-found-screen.tsx';
@@ -6,6 +5,8 @@ import {ReviewForm} from '../../components/rewiew-form/review-form.tsx';
 import {ReviewsList} from '../../components/reviews-list/reviews-list.tsx';
 import {Map} from '../../components/map/map.tsx';
 import {NearbyList} from '../../components/offers-list/nearby-list.tsx';
+import {store} from '../../store';
+import {CITY_LOCATION} from '../../const.ts';
 
 type OfferProps = {
   offers: Offer[];
@@ -127,7 +128,7 @@ export function OfferScreen({offers}: OfferProps): JSX.Element {
             </section>
           </div>
         </div>
-        <Map cityLocation={AMSTERDAM} mapPoints={nearbyOffers.map((o) => o.location)} className={'offer__map'}/>
+        <Map cityLocation={CITY_LOCATION[store.getState().city]} mapPoints={nearbyOffers.map((o) => o.location)} className={'offer__map'}/>
       </section>
       <div className="container">
         <section className="near-places places">

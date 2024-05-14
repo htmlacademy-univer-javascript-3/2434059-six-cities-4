@@ -1,6 +1,6 @@
 import {useEffect, useRef} from 'react';
 import {useMap} from '../../hooks/use-map.ts';
-import {layerGroup, Marker} from 'leaflet';
+import {Icon, layerGroup, Marker} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {MapPoint} from '../../types/map-point.ts';
 
@@ -10,12 +10,15 @@ type MapProps = {
   className: string;
 }
 
+const defaultMarker = new Icon({iconUrl: 'img/pin.svg'});
+
 export function Map({cityLocation, mapPoints, className}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, cityLocation);
 
   useEffect(() => {
     if (map) {
+      map.setView({lat: cityLocation.lat, lng: cityLocation.lng});
       const markerLayer = layerGroup().addTo(map);
       mapPoints.forEach((point) => {
         const marker = new Marker({
@@ -23,7 +26,7 @@ export function Map({cityLocation, mapPoints, className}: MapProps): JSX.Element
           lng: point.lng
         });
 
-        marker.addTo(markerLayer);
+        marker.setIcon(defaultMarker).addTo(markerLayer);
       });
 
       return () => {

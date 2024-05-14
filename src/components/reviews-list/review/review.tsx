@@ -28,8 +28,8 @@ export function Review({review}: ReviewProps): JSX.Element {
         <p className="reviews__text">
           {review.reviewText}
         </p>
-        <time className="reviews__time" dateTime={review.reviewDate.toISOString()}>
-          {review.reviewDate.toLocaleString('en', {month: 'long', year: 'numeric'})}
+        <time className="reviews__time" dateTime={review.reviewDate}>
+          {new Date(review.reviewDate).toLocaleString('en', {month: 'long', year: 'numeric'})}
         </time>
       </div>
     </li>
