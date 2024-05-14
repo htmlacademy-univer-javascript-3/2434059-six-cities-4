@@ -6,7 +6,7 @@ import {CardType, SortBy} from '../../const.ts';
 type OffersListProps = {
   offers: Offer[];
   cardType: CardType;
-  sortBy: SortBy;
+  sortBy?: SortBy;
   onChangeActivePoint: (point: MapPoint|undefined) => void;
 }
 
