@@ -30,5 +30,5 @@ export type ReviewData = {
   author: Person;
   reviewText: string;
   rating: number;
-  reviewDate: Date;
+  reviewDate: string;
 }

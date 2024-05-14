@@ -18,7 +18,7 @@ export function App({offers}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={AppRoute.Main} element={<MainScreen placesCount={312} offers={offers}/>}/>
+        <Route path={AppRoute.Main} element={<MainScreen/>}/>
         <Route path={AppRoute.Login} element={<LoginScreen/>}/>
         <Route path={AppRoute.Offer} element={<OfferLayout/>}>
           <Route path={':id'} element={<OfferScreen offers={offers}/>}/>
