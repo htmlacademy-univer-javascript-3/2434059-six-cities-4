@@ -1,6 +1,6 @@
-import {City} from '../../const.ts';
-import {useAppDispatch, useAppSelector} from '../../hooks';
-import {changeCity} from '../../store/action.ts';
+import {City} from '../../../const.ts';
+import {useAppDispatch, useAppSelector} from '../../../hooks';
+import {changeCity} from '../../../store/action.ts';
 
 type CityButtonProps = {
   city: City;
