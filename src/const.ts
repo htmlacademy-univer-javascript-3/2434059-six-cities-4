@@ -30,9 +30,16 @@ export enum City {
 }
 
 export enum CardType {
-  Offer = 'Offer',
+  CityPlace = 'CityPlace',
   Favourite = 'Favourite',
   Nearby = 'Nearby'
+}
+
+export enum SortBy {
+  Popular = 'Popular',
+  PriceLow = 'PriceLow',
+  PriceHigh = 'PriceHigh',
+  TopRated = 'TopRated',
 }
 
 export const CITIES: City[] = [

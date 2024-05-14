@@ -1,8 +1,34 @@
-import {NearPlaceCard} from '../components/card/near-place-card/near-place-card.tsx';
-import {AppRoute, PlaceType} from '../const.ts';
-import {Link} from 'react-router-dom';
+import {AppRoute, CardType} from '../const.ts';
+import {Link, useParams} from 'react-router-dom';
+import {PlacesList} from '../components/places-list/places-list.tsx';
+import {Offer} from '../types/offer.ts';
+import {useState} from 'react';
+import {MapPoint} from '../types/map-point.ts';
+import {NotFoundScreen} from './not-found-screen/not-found-screen.tsx';
+import {Map} from '../components/map/map.tsx';
 
-export function OfferNotLoggedInScreen(): JSX.Element {
+type OfferProps = {
+  offers: Offer[];
+}
+
+export function OfferNotLoggedInScreen({offers}: OfferProps): JSX.Element {
+  const [activePoint, setActivePoint] = useState<MapPoint|undefined>();
+  const params = useParams();
+  const offer = offers.find((o) => o.id.toString() === params.id);
+
+  if (!offer) {
+    return (<NotFoundScreen/>);
+  }
+
+  const descriptionParagraphs = offer.description.split('\n');
+  const paragraphs: [number, string][] = [];
+  for (let i = 0; i < descriptionParagraphs.length; i++) {
+    paragraphs.push([i, descriptionParagraphs[i]]);
+  }
+
+  const nearbyOffers = offers.filter((o)=>o.id !== offer.id).slice(0, 3);
+  const pictures = offer.pictures.slice(0, 6);
+
   return (
     <div className="page">
       <header className="header">
@@ -32,40 +58,33 @@ export function OfferNotLoggedInScreen(): JSX.Element {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/room.jpg" alt="Photo studio"/>
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio"/>
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-02.jpg" alt="Photo studio"/>
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-03.jpg" alt="Photo studio"/>
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/studio-01.jpg" alt="Photo studio"/>
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio"/>
-              </div>
+              {pictures.map((pic) => (
+                <div className="offer__image-wrapper" key={pic}>
+                  <img className="offer__image" src={pic} alt="Photo studio"/>
+                </div>
+              ))}
             </div>
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
-              <div className="offer__mark">
-                <span>Premium</span>
-              </div>
+              {offer.premium && (
+                <div className="offer__mark">
+                  <span>Premium</span>
+                </div>)}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
-                  Beautiful &amp; luxurious studio at great location
+                  {offer.placeName}
                 </h1>
-                <button className="offer__bookmark-button button" type="button">
+                <button
+                  className={offer.inBookmarks
+                    ? 'offer__bookmark-button offer__bookmark-button--active button'
+                    : 'offer__bookmark-button button'}
+                  type="button"
+                >
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
-                  <span className="visually-hidden">To bookmarks</span>
+                  <span className="visually-hidden">{offer.inBookmarks ? 'In bookmarks' : 'To bookmarks'}</span>
                 </button>
               </div>
               <div className="offer__rating rating">
@@ -73,84 +92,57 @@ export function OfferNotLoggedInScreen(): JSX.Element {
                   <span style={{width: 80}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="offer__rating-value rating__value">4.8</span>
+                <span className="offer__rating-value rating__value">{offer.rating}</span>
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  Apartment
+                  {offer.placeType}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  3 Bedrooms
+                  {offer.bedrooms} Bedrooms
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max 4 adults
+                  Max {offer.adults} adults
                 </li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">&euro;120</b>
+                <b className="offer__price-value">&euro;{offer.price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
-                <ul className="offer__inside-list">
-                  <li className="offer__inside-item">
-                    Wi-Fi
-                  </li>
-                  <li className="offer__inside-item">
-                    Washing machine
-                  </li>
-                  <li className="offer__inside-item">
-                    Towels
-                  </li>
-                  <li className="offer__inside-item">
-                    Heating
-                  </li>
-                  <li className="offer__inside-item">
-                    Coffee machine
-                  </li>
-                  <li className="offer__inside-item">
-                    Baby seat
-                  </li>
-                  <li className="offer__inside-item">
-                    Kitchen
-                  </li>
-                  <li className="offer__inside-item">
-                    Dishwasher
-                  </li>
-                  <li className="offer__inside-item">
-                    Cabel TV
-                  </li>
-                  <li className="offer__inside-item">
-                    Fridge
-                  </li>
-                </ul>
+                {offer.features.length > 0 && (
+                  <ul className="offer__inside-list">
+                    {offer.features.map((f)=>
+                      (
+                        <li className="offer__inside-item" key={f}>
+                          {f}
+                        </li>
+                      )
+                    )}
+                  </ul>)}
               </div>
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
-                  <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
+                  <div className={`offer__avatar-wrapper ${offer.host.pro && 'offer__avatar-wrapper--pro'} user__avatar-wrapper`}>
                     <img
-                      className="offer__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74"
+                      className="offer__avatar user__avatar" src={offer.host.avatar} width="74" height="74"
                       alt="Host avatar"
                     />
                   </div>
                   <span className="offer__user-name">
-                    Angelina
+                    {offer.host.name}
                   </span>
-                  <span className="offer__user-status">
-                    Pro
-                  </span>
+                  {offer.host.pro && (
+                    <span className="offer__user-status">
+                      Pro
+                    </span>)}
                 </div>
                 <div className="offer__description">
-                  <p className="offer__text">
-                    A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The
-                    building is green and from 18th century.
-                  </p>
-                  <p className="offer__text">
-                    An independent House, strategically located between Rembrand Square and National Opera, but where
-                    the
-                    bustle of the city comes to rest in this alley flowery and colorful.
-                  </p>
+                  {paragraphs.map(([i, par]) => (
+                    <p key={i}>{par}</p>
+                  ))}
                 </div>
               </div>
               <section className="offer__reviews reviews">
@@ -187,33 +179,20 @@ export function OfferNotLoggedInScreen(): JSX.Element {
               </section>
             </div>
           </div>
-          <section className="offer__map map"></section>
+          <Map
+            centerLocation={offer.location}
+            mapPoints={nearbyOffers.map((o) => o.location)}
+            className={'offer__map'}
+            activePoint={activePoint}
+          />
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
-              <NearPlaceCard
-                image={'img/room.jpg'}
-                price={80}
-                placeName={'Wood and stone place'}
-                placeType={PlaceType.Room}
-                inBookmarks
-              />
-              <NearPlaceCard
-                image={'img/apartment-02.jpg'}
-                price={132}
-                placeName={'Canal View Prinsengracht'}
-                placeType={PlaceType.Apartment}
-              />
-              <NearPlaceCard
-                premium
-                image={'img/apartment-03.jpg'}
-                price={180}
-                placeName={'Nice, cozy, warm big bed apartment'}
-                placeType={PlaceType.Apartment}
-              />
-            </div>
+            <PlacesList
+              offers={nearbyOffers} cardType={CardType.Nearby}
+              onChangeActivePoint={(p) => setActivePoint(p)}
+            />
           </section>
         </div>
       </main>

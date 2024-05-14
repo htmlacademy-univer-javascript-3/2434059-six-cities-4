@@ -4,15 +4,17 @@ import {NotFoundScreen} from '../not-found-screen/not-found-screen.tsx';
 import {ReviewForm} from '../../components/rewiew-form/review-form.tsx';
 import {ReviewsList} from '../../components/reviews-list/reviews-list.tsx';
 import {Map} from '../../components/map/map.tsx';
-import {NearbyList} from '../../components/offers-list/nearby-list.tsx';
-import {store} from '../../store';
-import {CITY_LOCATION} from '../../const.ts';
+import {CardType} from '../../const.ts';
+import {PlacesList} from '../../components/places-list/places-list.tsx';
+import {useState} from 'react';
+import {MapPoint} from '../../types/map-point.ts';
 
 type OfferProps = {
   offers: Offer[];
 }
 
 export function OfferScreen({offers}: OfferProps): JSX.Element {
+  const [activePoint, setActivePoint] = useState<MapPoint|undefined>();
   const params = useParams();
   const offer = offers.find((o) => o.id.toString() === params.id);
 
@@ -128,12 +130,17 @@ export function OfferScreen({offers}: OfferProps): JSX.Element {
             </section>
           </div>
         </div>
-        <Map cityLocation={CITY_LOCATION[store.getState().city]} mapPoints={nearbyOffers.map((o) => o.location)} className={'offer__map'}/>
+        <Map
+          centerLocation={offer.location}
+          mapPoints={nearbyOffers.map((o) => o.location)}
+          className={'offer__map'}
+          activePoint={activePoint}
+        />
       </section>
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <NearbyList nearbyOffers={nearbyOffers}/>
+          <PlacesList offers={nearbyOffers} cardType={CardType.Nearby} onChangeActivePoint={(p) => setActivePoint(p)}/>
         </section>
       </div>
     </main>

@@ -1,5 +1,5 @@
 import {CITIES} from '../../const.ts';
-import {CityButton} from '../city/city.tsx';
+import {CityButton} from '../city-places/city-button/city-button.tsx';
 
 export function CitiesList(): JSX.Element {
   return (

@@ -1,17 +1,31 @@
-import {Offer} from '../../types/offer.ts';
-import {Link} from 'react-router-dom';
 import {AppRoute, CardType} from '../../const.ts';
+import {Offer} from '../../types/offer.ts';
+import {MapPoint} from '../../types/map-point.ts';
 import {CardImage} from './card-image.tsx';
 import {CardRating} from './card-rating.tsx';
+import {Link} from 'react-router-dom';
 
-type CardProps = {
+type MainPageCardProps = {
   offer: Offer;
   cardType: CardType;
+  onMouseOverChange: (point: MapPoint|undefined) => void;
 }
 
-export function CardContent({offer, cardType}: CardProps): JSX.Element {
+export function Card({offer, cardType, onMouseOverChange}: MainPageCardProps): JSX.Element {
+  function handleMouseOver() {
+    onMouseOverChange(offer.location);
+  }
+
+  function handleMouseLeave() {
+    onMouseOverChange(undefined);
+  }
+
   return (
-    <>
+    <article
+      className={`${cardType === CardType.CityPlace ? 'cities__card' : 'near-places__card'} place-card`}
+      onMouseOver={handleMouseOver}
+      onMouseLeave={handleMouseLeave}
+    >
       {offer.premium && (
         <div className="place-card__mark">
           <span>Premium</span>
@@ -42,6 +56,6 @@ export function CardContent({offer, cardType}: CardProps): JSX.Element {
         </h2>
         <p className="place-card__type">{offer.placeType}</p>
       </div>
-    </>
+    </article>
   );
 }

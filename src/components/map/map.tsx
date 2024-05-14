@@ -5,20 +5,22 @@ import 'leaflet/dist/leaflet.css';
 import {MapPoint} from '../../types/map-point.ts';
 
 type MapProps = {
-  cityLocation: MapPoint;
+  centerLocation: MapPoint;
   mapPoints: MapPoint[];
+  activePoint?: MapPoint;
   className: string;
 }
 
 const defaultMarker = new Icon({iconUrl: 'img/pin.svg'});
+const activeMarker = new Icon({iconUrl: 'img/pin-active.svg'});
 
-export function Map({cityLocation, mapPoints, className}: MapProps): JSX.Element {
+export function Map({centerLocation, mapPoints, className, activePoint}: MapProps): JSX.Element {
   const mapRef = useRef(null);
-  const map = useMap(mapRef, cityLocation);
+  const map = useMap(mapRef, centerLocation);
 
   useEffect(() => {
     if (map) {
-      map.setView({lat: cityLocation.lat, lng: cityLocation.lng});
+      map.setView({lat: centerLocation.lat, lng: centerLocation.lng});
       const markerLayer = layerGroup().addTo(map);
       mapPoints.forEach((point) => {
         const marker = new Marker({
@@ -26,14 +28,14 @@ export function Map({cityLocation, mapPoints, className}: MapProps): JSX.Element
           lng: point.lng
         });
 
-        marker.setIcon(defaultMarker).addTo(markerLayer);
+        marker.setIcon(point === activePoint ? activeMarker : defaultMarker).addTo(markerLayer);
       });
 
       return () => {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, mapPoints, cityLocation]);
+  }, [map, mapPoints, centerLocation]);
 
 
   return (

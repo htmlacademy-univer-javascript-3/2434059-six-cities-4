@@ -9,7 +9,7 @@ type CardImageProps = {
 
 export function CardImage({id, picture, cardType}: CardImageProps): JSX.Element {
   switch (cardType) {
-    case CardType.Offer:
+    case CardType.CityPlace:
       return (
         <div className="cities__image-wrapper place-card__image-wrapper">
           <Link to={`${AppRoute.Offer}/${id}`}>
